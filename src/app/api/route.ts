@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
+
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
-    const newTask = body.record; // this comes from Supabase webhook
-
+    const newTask = body.record; // Supabase sends `record`
 
     console.log("Received new task from Supabase:", newTask);
 
