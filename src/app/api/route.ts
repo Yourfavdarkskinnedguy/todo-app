@@ -7,14 +7,17 @@ export async function POST(req: Request) {
     const body = await req.json();
     const newTask = body.record; // Supabase sends `record`
 
-    console.log("Received new task from Supabase:", newTask);
+    //console.log("Received new task from Supabase:", newTask);
 
     const n8nWebhook = process.env.N8N_WEBHOOK_URL!;
-    await fetch(n8nWebhook, {
+    const response = await fetch(n8nWebhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     });
+    const data = await response.json()
+    console.log("data check", data)
+    
 
     return NextResponse.json({ success: true, task: newTask });
   } catch (err: unknown) {
