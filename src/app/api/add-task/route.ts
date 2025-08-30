@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
     const newTask = body.record; // this comes from Supabase webhook
 
-    // 👇 Do whatever you want with newTask
+
     console.log("Received new task from Supabase:", newTask);
 
     const n8nWebhook = "https://your-n8n-server/webhook/todo";
