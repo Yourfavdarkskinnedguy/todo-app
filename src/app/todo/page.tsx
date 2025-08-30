@@ -96,7 +96,7 @@ export default function Home() {
     }
   };
 
-  // Toggle task completion
+  // set task completiom
   const toggleComplete = async (item: TodoItem) => {
     const { error } = await supabase
       .from("todos")
@@ -117,12 +117,12 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 p-6">
       <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-2xl shadow-xl">
-        {/* Heading */}
+   
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white">TODO LIST</h1>
         </div>
 
-        {/* Input */}
+ 
         <div className="flex items-center gap-2 mb-6">
           <input
             type="text"

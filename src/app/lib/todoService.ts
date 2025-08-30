@@ -22,7 +22,7 @@ export async function addTodo(task: string, user_email:string) {
   return data;
 }
 
-// Update (mark completed)
+
 export async function updateTodo(id: string, completed: boolean) {
   const { data, error } = await supabase
     .from("todos")
