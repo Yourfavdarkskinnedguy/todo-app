@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import '@n8n/chat/style.css';
+import { createChat } from '@n8n/chat';
 
 interface TodoItem {
   id: string;
@@ -23,6 +25,7 @@ export default function Home() {
 }
 
 
+
 function TodoApp() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -31,6 +34,17 @@ function TodoApp() {
   const [editingText, setEditingText] = useState<string>("");
   const [items, setItems] = useState<TodoItem[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
+
+  ///chatbot 
+  const ChatBot = () => {
+    useEffect(() => {
+      createChat({
+        webhookUrl: "https://todoapp-staging.vercel.app/chatbot/send-chatbot", // Replace with your N8N webhook URL
+      });
+    }, []);
+  
+    return <div id="n8n-chat-container"></div>;
+  };
 
   // Load tasks from Supabase
   const loadTodos = useCallback(async () => {
@@ -207,6 +221,7 @@ function TodoApp() {
                 >
                   <MdDeleteOutline />
                 </button>
+               <ChatBot/>
               </div>
             </li>
           ))}

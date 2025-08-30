@@ -10,6 +10,10 @@ export async function fetchTodos() {
   return data || [];
 }
 
+
+
+
+
 // Add a new todo
 export async function addTodo(task: string, user_email:string) {
   const { data, error } = await supabase.from("todos").insert([
