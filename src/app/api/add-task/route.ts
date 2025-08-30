@@ -19,10 +19,13 @@ export async function POST(req: Request) {
         success: true, 
         task: data 
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
-}
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: String(err) }, { status: 500 });
+  }}
+  
 
 
 

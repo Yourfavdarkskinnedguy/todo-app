@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 import { MdDeleteOutline } from "react-icons/md";
@@ -19,44 +19,53 @@ export default function Home() {
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState<string>("");
-
   const [items, setItems] = useState<TodoItem[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
-  // Load task from supabase
-  const loadTodos = async () => {
+  // Load tasks from Supabase
+  const loadTodos = useCallback(async () => {
+    if (!email) return;
     const { data, error } = await supabase
       .from("todos")
       .select("*")
-      .eq("user_email", email); // only fetch tasks for this user
-    if (error) return console.error("Error fetching todos:", error);
-    setItems(data || []);
-  };
+      .eq("user_email", email);
+
+    if (error) {
+      console.error("Error fetching todos:", error);
+    } else {
+      setItems(data || []);
+    }
+  }, [email]);
 
   useEffect(() => {
     loadTodos();
-  }, [email]);
+  }, [loadTodos]);
 
-  ///// Add a new task
+  // Add a new task
   const handleAddTask = async () => {
     if (!inputValue.trim() || !email) return;
 
     const { data, error } = await supabase
       .from("todos")
       .insert([{ task: inputValue, user_email: email }])
-      .select(); // returns inserted row with id
+      .select();
 
-    if (error) return console.error("Error adding task:", error);
-
-    setItems((prev) => [...prev, data[0]]);
-    setInputValue("");
+    if (error) {
+      console.error("Error adding task:", error);
+    } else {
+      setItems((prev) => [...prev, data[0]]);
+      setInputValue("");
+    }
   };
 
-  /// Delete a task
+  // Delete a task
   const handleDeleteTask = async (id: string) => {
     const { error } = await supabase.from("todos").delete().eq("id", id);
-    if (error) return console.error("Error deleting task:", error);
-    setItems(items.filter((item) => item.id !== id));
+    if (error) {
+      console.error("Error deleting task:", error);
+    } else {
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    }
   };
 
   // Start editing a task
@@ -74,14 +83,17 @@ export default function Home() {
       .update({ task: editingText })
       .eq("id", editingId);
 
-    if (error) return console.error("Error editing task:", error);
-
-    setItems((prev) =>
-      prev.map((t) => (t.id === editingId ? { ...t, task: editingText } : t))
-    );
-
-    setEditingId(null);
-    setEditingText("");
+    if (error) {
+      console.error("Error editing task:", error);
+    } else {
+      setItems((prev) =>
+        prev.map((t) =>
+          t.id === editingId ? { ...t, task: editingText } : t
+        )
+      );
+      setEditingId(null);
+      setEditingText("");
+    }
   };
 
   // Toggle task completion
@@ -90,13 +102,16 @@ export default function Home() {
       .from("todos")
       .update({ completed: !item.completed })
       .eq("id", item.id);
-    if (error) return console.error("Error updating task:", error);
 
-    setItems((prev) =>
-      prev.map((t) =>
-        t.id === item.id ? { ...t, completed: !t.completed } : t
-      )
-    );
+    if (error) {
+      console.error("Error updating task:", error);
+    } else {
+      setItems((prev) =>
+        prev.map((t) =>
+          t.id === item.id ? { ...t, completed: !t.completed } : t
+        )
+      );
+    }
   };
 
   return (
@@ -131,9 +146,8 @@ export default function Home() {
             <li
               key={item.id}
               className={`flex items-center justify-between bg-gray-700 border border-gray-600 rounded-xl p-4 shadow-sm hover:shadow-md transition duration-200 ${
-                item.completed ? "bg-gray-700 opacity-50" : ""
+                item.completed ? "opacity-50" : ""
               }`}
-             // className="flex items-center justify-between bg-gray-700 border border-gray-600 rounded-xl p-4 shadow-sm hover:shadow-md transition duration-200"
             >
               <div className="flex-1 min-w-0 flex items-center gap-3">
                 <input
