@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     console.log("Received new task from Supabase:", newTask);
 
-    const n8nWebhook = "https://your-n8n-server/webhook/todo";
+    const n8nWebhook = process.env.N8N_WEBHOOK_URL!;
     await fetch(n8nWebhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
