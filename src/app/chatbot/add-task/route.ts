@@ -10,11 +10,11 @@ export async function POST(req: Request) {
         const body = await req.json();
         console.log('n8n body: ', body)
         // Supabase sends `record`
-        
-        const { error } = await supabase
-              .from("todos")
-              .update({ task: body.task })
-              .eq("id", body.id);
+
+        const { data, error } = await supabase
+            .from("todos")
+            .insert([{ task: body.task }])
+            .select();
         revalidatePath('/todo')
 
         //console.log("Received new task from Supabase:", newTask);
