@@ -136,12 +136,12 @@ export default function Home({}) {
         {/* Signup link */}
         <div className="text-center text-sm">
           Don&apos;t have an account?{" "}
-          <a
+          <Link
             className="font-medium text-blue-500 hover:underline"
             href="/signup"
           >
             Sign up
-          </a>
+          </Link>
         </div>
       </div>
     </div>

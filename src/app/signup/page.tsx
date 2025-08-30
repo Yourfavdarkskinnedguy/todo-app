@@ -118,12 +118,12 @@ export default function Home() {
         {/* Signup link */}
         <div className="text-center text-sm">
           already have an account?{" "}
-          <a
+          <Link
             className="font-medium text-blue-500 hover:underline"
             href="/"
           >
             login
-          </a>
+          </Link>
         </div>
       </div>
     </div>
