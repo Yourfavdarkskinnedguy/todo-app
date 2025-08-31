@@ -1,9 +1,9 @@
-## AI-Powered To-Do List App
+# AI-Powered To-Do List App
 
 A full-stack Next.js to-do list application with persistent storage in Supabase and an AI-enhanced chatbot integrated via N8N. This project demonstrates building automations that improve productivity and leverage AI to enrich user tasks.
 
-# Features
-# Core To-Do List (Foundation)
+## Features
+## Core To-Do List (Foundation)
 
 - Add, edit, and mark tasks as complete
 
@@ -11,14 +11,14 @@ A full-stack Next.js to-do list application with persistent storage in Supabase 
 
 - Basic user identification (email)
 
-# AI Chatbot Enhancement
+## AI Chatbot Enhancement
 
 - Integrates with N8N for workflow automation
 
 - Enhances task titles using AI: makes tasks clearer and more actionable
 
 
-# Tech Stack
+## Tech Stack
 
 - Frontend: Next.js
 
@@ -30,13 +30,13 @@ A full-stack Next.js to-do list application with persistent storage in Supabase 
 
 - Automation: N8N
 
-# Demo
+## Demo
 
 Deployed App: [Webapp URL](https://todoapp-staging.vercel.app/)
 
 Loom Walkthrough Video: [Loom Video URL](https://www.loom.com/share/dccd085d38f149e8b9d0d674ffa9a924?sid=590ec7ad-b4ad-4fe9-b8b5-40072c3f6ba8)
 
-# Installation (for local setup)
+## Installation (for local setup)
 
 Clone the repository:
 
@@ -62,7 +62,7 @@ N8N Workflow
 
 The N8N workflow is configured to enhance task titles with AI whenever a new task is added.
 
-# How It Works
+## How It Works
 
 - User adds a task in the web app
 
