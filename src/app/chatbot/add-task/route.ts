@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/app/lib/supabaseClient";
 import { revalidatePath } from 'next/cache';
 
-//import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 
 export async function POST(req: Request) {
-   // const searchParams = useSearchParams();
-   // const email = searchParams.get("email");
-    //console.log('emailllllllll', email)
+    const searchParams = useSearchParams();
+    const email = searchParams.get("email");
+    console.log('emailllllllll', email)
     
     try {
         const body = await req.json();
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
        const{data}= await supabase
         .from("todos")
-        .insert([{ task: body, completed: false }])
+        .insert([{ task: body.task, completed: false }])
         .select();
 
 
