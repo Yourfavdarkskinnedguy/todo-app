@@ -1,36 +1,32 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/app/lib/supabaseClient";
-import { revalidatePath } from 'next/cache';
-
-import { useSearchParams } from "next/navigation";
-
 
 export async function POST(req: Request) {
-    const searchParams = useSearchParams();
+  try {
+    // Extract email from query params instead of using useSearchParams
+    const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
-    console.log('emailllllllll', email)
-    
-    try {
-        const body = await req.json();
-        console.log('chatbot task: ', body)
-        // Supabase sends `record`
+    console.log("email:", email);
 
-        
+    // Get JSON body
+    const body = await req.json();
+    console.log("chatbot task: ", body);
 
-       const{data}= await supabase
-        .from("todos")
-        .insert([{ task: body.task, completed: false }])
-        .select();
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from("todos")
+      .insert([{ task: body.task, completed: false, email }]) // also store email
+      .select();
 
-
-      
-
-
-        return NextResponse.json({ success: true });
-    } catch (err: unknown) {
-        if (err instanceof Error) {
-            return NextResponse.json({ error: err.message }, { status: 500 });
-        }
-        return NextResponse.json({ error: String(err) }, { status: 500 });
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
+
+    return NextResponse.json({ success: true, data });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return NextResponse.json({ error: err.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: String(err) }, { status: 500 });
+  }
 }
