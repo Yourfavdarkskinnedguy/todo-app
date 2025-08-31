@@ -3,23 +3,17 @@ import { supabase } from "@/app/lib/supabaseClient";
 
 export async function POST(req: Request) {
   try {
-    // Extract email from query params instead of using useSearchParams
-    const { searchParams } = new URL(req.url);
-    const email = searchParams.get("email");
-    console.log("email:", email);
+    const { task, email } = await req.json(); // expect email from request body
+    console.log("Received task:", task, "for email:", email);
 
-    // Get JSON body
-    const body = await req.json();
-    console.log("chatbot task: ", body);
-
-    // Insert into Supabase
     const { data, error } = await supabase
       .from("todos")
-      .insert([{ task: body.task, completed: false, email }]) // also store email
+      .insert([{ task, completed: false, user_email: email }])
       .select();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      console.error("Supabase insert error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data });
