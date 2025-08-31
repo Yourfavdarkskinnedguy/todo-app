@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## AI-Powered To-Do List App
 
-## Getting Started
+A full-stack Next.js to-do list application with persistent storage in Supabase and an AI-enhanced chatbot integrated via N8N. This project demonstrates building automations that improve productivity and leverage AI to enrich user tasks.
 
-First, run the development server:
+# Features
+# Core To-Do List (Foundation)
 
-```bash
+- Add, edit, and mark tasks as complete
+
+- Tasks are persisted in Supabase
+
+- Basic user identification (email)
+
+# AI Chatbot Enhancement
+
+- Integrates with N8N for workflow automation
+
+- Enhances task titles using AI: makes tasks clearer and more actionable
+
+
+# Tech Stack
+
+- Frontend: Next.js
+
+- Database: Supabase
+
+- Hosting: Vercel
+
+- AI Assistant: openai 
+
+- Automation: N8N
+
+# Demo
+
+Deployed App: [Webapp URL](https://todoapp-staging.vercel.app/)
+
+Loom Walkthrough Video: [Loom Video URL](https://www.loom.com/share/dccd085d38f149e8b9d0d674ffa9a924?sid=590ec7ad-b4ad-4fe9-b8b5-40072c3f6ba8)
+
+# Installation (for local setup)
+
+Clone the repository:
+
+- git clone [GitHub Repo URL](https://github.com/Yourfavdarkskinnedguy/todo-app/tree/main)
+
+- Install dependencies:
+
+- cd todo-app
+npm install
+
+
+Set up environment variables (create .env.local):
+
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+N8N Workflow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The N8N workflow is configured to enhance task titles with AI whenever a new task is added.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# How It Works
 
-## Learn More
+- User adds a task in the web app
 
-To learn more about Next.js, take a look at the following resources:
+- Task is stored in Supabase with persistent storage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- N8N workflow triggers AI enhancement for the task title
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Enhanced task title is updated in Supabase
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- (Future) WhatsApp integration allows triggering tasks via messages
