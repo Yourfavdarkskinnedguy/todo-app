@@ -2,22 +2,29 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/app/lib/supabaseClient";
 import { revalidatePath } from 'next/cache';
 
-
+//import { useSearchParams } from "next/navigation";
 
 
 export async function POST(req: Request) {
+   // const searchParams = useSearchParams();
+   // const email = searchParams.get("email");
+    //console.log('emailllllllll', email)
+    
     try {
         const body = await req.json();
-        console.log('n8n body: ', body)
+        console.log('chatbot task: ', body)
         // Supabase sends `record`
 
-        const { data, error } = await supabase
-            .from("todos")
-            .insert([{ task: body.task }])
-            .select();
-        revalidatePath('/todo')
+        
 
-        //console.log("Received new task from Supabase:", newTask);
+       const{data}= await supabase
+        .from("todos")
+        .insert([{ task: body, completed: false }])
+        .select();
+
+
+      
+
 
         return NextResponse.json({ success: true });
     } catch (err: unknown) {

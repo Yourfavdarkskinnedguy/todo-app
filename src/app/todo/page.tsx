@@ -39,12 +39,15 @@ function TodoApp() {
   const ChatBot = () => {
     useEffect(() => {
       createChat({
-        webhookUrl: "https://daniel1908.app.n8n.cloud/webhook/4d4bbd0c-d500-4404-bb4d-120017f1ea00/chat", // Replace with your N8N webhook URL
+        webhookUrl: "https://daniel1908.app.n8n.cloud/webhook/4d4bbd0c-d500-4404-bb4d-120017f1ea00/chat", // Points to the N8N workflow
+
       });
     }, []);
   
     return <div id="n8n-chat-container"></div>;
   };
+  
+
 
   // Load tasks from Supabase
   const loadTodos = useCallback(async () => {
@@ -161,6 +164,7 @@ function TodoApp() {
             Add
           </button>
         </div>
+        <ChatBot/>
 
         {/* Todo list */}
         <ul className="space-y-3">
@@ -221,7 +225,7 @@ function TodoApp() {
                 >
                   <MdDeleteOutline />
                 </button>
-               <ChatBot/>
+               
               </div>
             </li>
           ))}

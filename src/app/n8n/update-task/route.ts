@@ -15,7 +15,7 @@ export async function POST(req: Request) {
               .from("todos")
               .update({ task: body.task })
               .eq("id", body.id);
-        revalidatePath('/todo')
+
 
         //console.log("Received new task from Supabase:", newTask);
 
