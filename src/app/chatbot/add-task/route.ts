@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
        const{data}= await supabase
         .from("todos")
-        .insert([{ task: body.task, completed: false }])
+        .insert([{ task: body.task, completed: false, user_email: body.user_email}])
         .select();
 
 
