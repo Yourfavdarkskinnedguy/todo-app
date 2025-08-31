@@ -36,17 +36,22 @@ function TodoApp() {
   const [inputValue, setInputValue] = useState<string>("");
 
   ///chatbot 
-  const ChatBot = () => {
+  const ChatBot = ({ userEmail }: { userEmail: string | null }) => {
     useEffect(() => {
+      if (!userEmail) return; // don't init if no email
+  
       createChat({
-        webhookUrl: "https://daniel1908.app.n8n.cloud/webhook/4d4bbd0c-d500-4404-bb4d-120017f1ea00/chat", // Points to the N8N workflow
-
+        webhookUrl: "https://daniel1908.app.n8n.cloud/webhook/4d4bbd0c-d500-4404-bb4d-120017f1ea00/chat",
+        target: "#n8n-chat-container",
+        metadata: { user_email: userEmail }, // 👈 attach email to every message
       });
-    }, []);
+    }, [userEmail]);
   
     return <div id="n8n-chat-container"></div>;
   };
   
+  
+
 
 
   // Load tasks from Supabase
@@ -164,7 +169,7 @@ function TodoApp() {
             Add
           </button>
         </div>
-        <ChatBot/>
+        <ChatBot userEmail={email}/>
 
         {/* Todo list */}
         <ul className="space-y-3">
