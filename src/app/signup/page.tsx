@@ -35,7 +35,7 @@ export default function Home() {
     supabase.from("todos").upsert({
         user_email: email
     })
-    router.push('/todo')
+    router.push(`/todo?email=${encodeURIComponent(email)}`);
     console.log('login button clicked!')
   };
 
