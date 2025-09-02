@@ -10,7 +10,6 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         console.log('chatbot task: ', body)
-        // Supabase sends `record`
 
         
 
@@ -18,6 +17,7 @@ export async function POST(req: Request) {
         .from("todos")
         .insert([{ task: body.task, completed: false, user_email: body.user_email}])
         .select();
+        revalidatePath('/todo')
 
 
       

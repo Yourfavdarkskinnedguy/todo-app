@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import { revalidatePath } from "next/cache";
 
 
 export async function POST(req: Request) {
@@ -17,6 +17,7 @@ export async function POST(req: Request) {
     });
     const data = await response.json()
     console.log("data check", data)
+    revalidatePath('/todo')
     
 
     return NextResponse.json({ success: true, task: newTask });

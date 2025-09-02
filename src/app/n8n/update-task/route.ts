@@ -5,19 +5,20 @@ import { revalidatePath } from 'next/cache';
 
 
 
+
 export async function POST(req: Request) {
     try {
         const body = await req.json();
         console.log('n8n body: ', body)
-        // Supabase sends `record`
         
         const { error } = await supabase
               .from("todos")
               .update({ task: body.task })
               .eq("id", body.id);
+              revalidatePath('/todo')
 
 
-        //console.log("Received new task from Supabase:", newTask);
+    
 
         return NextResponse.json({ success: true });
     } catch (err: unknown) {
